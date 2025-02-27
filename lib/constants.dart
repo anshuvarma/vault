@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 final List<String> expenseCategories = [
   'Food',
@@ -103,3 +106,34 @@ void deleteDialog(BuildContext context) {
     },
   );
 }
+
+// Exit confirmation popup message
+Future<bool> exitConfirmationDialog(BuildContext context) async {
+    return await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Exit App"),
+            content: Text("Are you sure you want to exit?"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false), // Cancel
+                child: Text("Cancel"),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true), // Exit
+                child: Text("Exit"),
+              ),
+            ],
+          ),
+        ) ??
+        false;
+  }
+
+  /// Function to exit the app properly
+  void exitApp() {
+    if (Platform.isAndroid) {
+      SystemNavigator.pop(); // Properly exits the app on Android
+    } else if (Platform.isIOS) {
+      exit(0); // Force exit on iOS (not recommended by Apple)
+    }
+  }
