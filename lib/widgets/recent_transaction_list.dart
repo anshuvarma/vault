@@ -15,11 +15,14 @@ class RecentTransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return transactions.isNotEmpty
+    final recentTransactions =
+        transactions.length > 5 ? transactions.sublist(0, 5) : transactions;
+
+    return recentTransactions.isNotEmpty
         ? ListView.builder(
-            itemCount: transactions.length,
+            itemCount: recentTransactions.length,
             itemBuilder: (context, index) {
-              final transaction = transactions[index];
+              final transaction = recentTransactions[index];
               final category = transaction['category'];
               final color = categoryColors[category] ?? Colors.cyan;
 
@@ -54,17 +57,35 @@ class RecentTransactionList extends StatelessWidget {
                   deleteTransaction(transaction['id']);
                 },
                 child: Card(
-                  color: color.withOpacity(0.8),
+                  color: color,
                   child: ListTile(
                     iconColor: Colors.white,
                     leading: Icon(Icons.account_balance_wallet),
                     title: Text(
                       transaction['category'],
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [Text(transaction['date'])],
+                      children: [
+                        SizedBox(height: 2,),
+                        Text(
+                          transaction['date'],
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        SizedBox(height: 2,),
+                        Text(
+                          'Paid through ${transaction['account']}',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
                     trailing: Text(
                       transaction['amount'].toString(),

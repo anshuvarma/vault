@@ -43,6 +43,9 @@ class DBHelper {
         if (oldVersion < 2) {
           // Ensure the 'name' column is added if upgrading from version 1
           await db.execute("ALTER TABLE transactions ADD COLUMN name TEXT");
+          // Update existing NULL values with 'Unknown'
+          await db.execute(
+              "UPDATE transactions SET name = 'Unknown' WHERE name IS NULL");
         }
       },
     );
@@ -51,17 +54,41 @@ class DBHelper {
   // Insert a transaction into the database
   Future<int> insertTransaction(Map<String, dynamic> transaction) async {
     final db = await database;
+
+    // Debugging: Check if `account` is null before inserting
+    print("Before insert - Account: ${transaction['account']}");
+
+    // Ensure the name field is never null
+    transaction['name'] = transaction['name'] ?? 'Unknown';
+
+    // Ensure the 'account' field is properly stored
+    transaction['account'] = transaction['account']?.toString().trim();
+
+    if (transaction['account'] == null || transaction['account'].toString().trim().isEmpty) {
+    print("⚠️ Warning: 'account' is null or empty!");
+  }
+
     print("Inserting transaction: $transaction");
     final result = await db.insert('transactions', transaction);
     print("Transaction inserted with ID: $result");
+
     return result;
   }
 
   // Fetch all transactions from the database
   Future<List<Map<String, dynamic>>> fetchTransactions() async {
     final db = await database;
-    final List<Map<String, dynamic>> result = await db.rawQuery(
-        'SELECT id, name, category, CAST(amount AS REAL) AS amount, date, isExpense FROM transactions');
+    final List<Map<String, dynamic>> result = await db.rawQuery('''
+    SELECT id, 
+           COALESCE(name, 'Unknown') AS name,  -- Ensure 'name' is never null
+           category, 
+           CAST(amount AS REAL) AS amount, 
+           date,
+           account, 
+           isExpense 
+    FROM transactions
+    ''');
+    print("Fetched transactions: $result"); // Debugging log
     return result;
   }
 

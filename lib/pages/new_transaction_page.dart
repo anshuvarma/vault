@@ -61,6 +61,7 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
       'category': categoryOrSource,
       'amount': amount,
       'date': date,
+      'account': account,
       'isExpense': isExpense ? 1 : 0,
     });
 
@@ -204,7 +205,7 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
                               color: isExpense
-                                  ? Colors.redAccent
+                                  ? Color.fromARGB(255, 215, 82, 82)
                                   : Colors.grey[200],
                             ),
                             child: Column(
@@ -238,7 +239,7 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
                               borderRadius: BorderRadius.circular(12),
                               color: isExpense
                                   ? Colors.grey[200]
-                                  : Colors.greenAccent,
+                                  : Color.fromARGB(255, 127, 213, 130),
                             ),
                             child: Column(
                               children: [

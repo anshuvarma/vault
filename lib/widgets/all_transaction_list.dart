@@ -54,18 +54,38 @@ class AllTransactionList extends StatelessWidget {
             onDeleteTransaction(transaction['id']);
           },
           child: Card(
-            color: color.withOpacity(0.8),
+            color: color,
             child: ListTile(
               iconColor: Colors.white,
               leading: Icon(
                 Icons.account_balance_wallet,
               ),
               title: Text(transaction['category'],
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  )),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(transaction['date']),
+                  SizedBox(
+                    height: 2,
+                  ),
+                  Text(
+                    transaction['date'],
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 2,
+                  ),
+                  Text(
+                    'Paid through ${transaction['account']}',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                 ],
               ),
               trailing: Text(

@@ -9,8 +9,8 @@ final List<String> expenseCategories = [
   'Food',
   'Shopping',
   'Transport',
-  'Entertainment',
   'Health',
+  'Entertainment',
   'Others',
 ];
 
@@ -28,32 +28,32 @@ final List<String> incomeSources = [
 final List<String> accounts = ['Cash', 'Card', 'UPI'];
 
 final Map<String, Color> categoryColors = {
-  'Food': Colors.redAccent,
-  'Shopping': Colors.greenAccent,
-  'Transport': Color.fromARGB(255, 208, 62, 234),
-  'Entertainment': const Color.fromARGB(255, 227, 161, 74),
-  'Health': Colors.blueAccent,
+  'Food': Color.fromARGB(255, 134, 175, 213),
+  'Shopping': Color.fromARGB(255, 243, 144, 109),
+  'Transport': Color.fromARGB(255, 152, 190, 115),
+  'Health': Color.fromARGB(255, 190, 106, 146),
+  'Entertainment': Color.fromARGB(255, 160, 122, 189),
   'Others': Colors.grey,
 };
 
 final Map<String, Color> typeColor = {
-  'Income': Colors.green.shade100,
-  'Expense': Colors.red.shade200,
+  'Income': const Color.fromARGB(255, 164, 223, 166),
+  'Expense': const Color.fromARGB(255, 207, 145, 145),
 };
 
 final Map<String, Color> sourceColors = {
-  'Salary': Colors.redAccent,
-  'Business': Colors.greenAccent,
-  'Investment': Colors.orangeAccent,
-  'Rental': Colors.purpleAccent,
-  'Freelance': Colors.blueAccent,
-  'Others': Colors.grey.shade700,
+  'Salary': const Color.fromARGB(255, 246, 136, 136),
+  'Business': const Color.fromARGB(255, 100, 193, 148),
+  'Investment': const Color.fromARGB(255, 235, 178, 103),
+  'Rental': const Color.fromARGB(255, 195, 125, 207),
+  'Freelance': const Color.fromARGB(255, 114, 147, 204),
+  'Others': Colors.grey,
 };
 
 final Map<String, Color> accountColors = {
-  'Cash': Colors.pinkAccent,
-  'Card': Colors.indigoAccent,
-  'UPI': Colors.cyanAccent.shade700,
+  'Cash': const Color.fromARGB(255, 229, 123, 158),
+  'Card': const Color.fromARGB(255, 142, 152, 208),
+  'UPI': const Color.fromARGB(255, 119, 188, 198),
 };
 
 void deleteDialog(BuildContext context) {
@@ -109,31 +109,31 @@ void deleteDialog(BuildContext context) {
 
 // Exit confirmation popup message
 Future<bool> exitConfirmationDialog(BuildContext context) async {
-    return await showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text("Exit App"),
-            content: Text("Are you sure you want to exit?"),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(false), // Cancel
-                child: Text("Cancel"),
-              ),
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(true), // Exit
-                child: Text("Exit"),
-              ),
-            ],
-          ),
-        ) ??
-        false;
-  }
+  return await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Exit App"),
+          content: Text("Are you sure you want to exit?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false), // Cancel
+              child: Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true), // Exit
+              child: Text("Exit"),
+            ),
+          ],
+        ),
+      ) ??
+      false;
+}
 
-  /// Function to exit the app properly
-  void exitApp() {
-    if (Platform.isAndroid) {
-      SystemNavigator.pop(); // Properly exits the app on Android
-    } else if (Platform.isIOS) {
-      exit(0); // Force exit on iOS (not recommended by Apple)
-    }
+/// Function to exit the app properly
+void exitApp() {
+  if (Platform.isAndroid) {
+    SystemNavigator.pop(); // Properly exits the app on Android
+  } else if (Platform.isIOS) {
+    exit(0); // Force exit on iOS (not recommended by Apple)
   }
+}

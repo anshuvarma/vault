@@ -8,6 +8,7 @@ import '../constants.dart';
 import '../db_helper.dart';
 import '../pages/expense_page.dart';
 import '../pages/new_transaction_page.dart';
+import 'expenses_bar_chart.dart';
 
 class ExpenseTracker extends StatefulWidget {
   const ExpenseTracker({super.key});
@@ -23,6 +24,8 @@ class _ExpenseTrackerState extends State<ExpenseTracker>
       GlobalKey<RecentTransactionsState>();
   final GlobalKey<OverallExpensesState> overallExpenseKey =
       GlobalKey<OverallExpensesState>();
+  final GlobalKey<ExpensesBarChartState> expensesBarChartKey =
+      GlobalKey<ExpensesBarChartState>();
   final TextEditingController _amountController = TextEditingController();
   bool isExpense = true;
   String selectedCategory = '';
@@ -40,15 +43,25 @@ class _ExpenseTrackerState extends State<ExpenseTracker>
   }
 
   Future<void> _loadTransactions() async {
+    print("Loading transactions...");
     final data = await dbHelper.fetchTransactions();
+    if (!mounted) {
+      print("Widget is not mounted, skipping setState.");
+      return;
+    }
     setState(() {
       newTransactions = data.reversed.toList();
+      print("Transactions updated.");
     });
   }
 
   void refreshTransactions() {
+    if (!mounted) return;
+
     recentTransactionsKey.currentState?.refreshTransactionList();
     overallExpenseKey.currentState?.fetchTransactions();
+    _loadTransactions();
+    expensesBarChartKey.currentState?.fetchTransactions();
     _loadTransactions();
     print("Transactions refreshed.");
   }
@@ -62,7 +75,7 @@ class _ExpenseTrackerState extends State<ExpenseTracker>
   void onItemTapped(int index) async {
     if (index == 1) {
       // Navigate to ExpensePage and await result
-      final result = await Navigator.pushReplacement(
+      final result = await Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ExpensePage()),
       );
@@ -105,8 +118,8 @@ class _ExpenseTrackerState extends State<ExpenseTracker>
           elevation: 2,
           centerTitle: true,
           title: Text(
-            "Coin Check",
-            style: TextStyle(color: Colors.black, fontSize: 20),
+            "Vault",
+            style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w500),
           ),
         ),
         body: Container(
@@ -116,11 +129,14 @@ class _ExpenseTrackerState extends State<ExpenseTracker>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                OverallExpenses(
-                  key: overallExpenseKey,
-                  onTransactionUpdated:
-                      refreshTransactions, // Pass the update callback
-                ),
+                ExpensesBarChart(
+                    key: expensesBarChartKey,
+                    onTransactionUpdated: refreshTransactions),
+                // OverallExpenses(
+                //   key: overallExpenseKey,
+                //   onTransactionUpdated:
+                //       refreshTransactions, // Pass the update callback
+                // ),
                 SizedBox(height: screenWidth * 0.04),
                 Padding(
                   padding: const EdgeInsets.only(left: 12.5),
@@ -149,7 +165,7 @@ class _ExpenseTrackerState extends State<ExpenseTracker>
           backgroundColor: Color.fromARGB(255, 250, 189, 241),
           foregroundColor: Colors.black,
           onPressed: () async {
-            final result = await Navigator.pushReplacement(
+            final result = await Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => NewTransactionPage(
