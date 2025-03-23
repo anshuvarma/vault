@@ -121,11 +121,12 @@ class ExpensesBarChartState extends State<ExpensesBarChart> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'Overall Expenses',
+                  'Payment Methods in Focus',
                   style: TextStyle(
-                      fontSize: screenWidth * 0.05,
+                      fontSize: screenWidth * 0.04,
                       fontWeight: FontWeight.bold),
                 ),
+                SizedBox(height: 0.5,),
                 Expanded(
                   child: dataMap.values.any((amount) => amount > 0)
                       ? BarChart(

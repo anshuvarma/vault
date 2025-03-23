@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_constructors, unused_local_variable, avoid_print, unused_field, unused_element, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, unused_local_variable, avoid_print, unused_field, unused_element, use_build_context_synchronously, use_function_type_syntax_for_parameters, non_constant_identifier_names
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:vault/widgets/bottom_nav_bar.dart';
 import 'package:vault/widgets/overall_expense.dart';
 import 'package:vault/widgets/recent_transaction.dart';
@@ -20,6 +21,7 @@ class ExpenseTracker extends StatefulWidget {
 class _ExpenseTrackerState extends State<ExpenseTracker>
     with WidgetsBindingObserver {
   int currentIndex = 0;
+  final PageController _pageController = PageController();
   final GlobalKey<RecentTransactionsState> recentTransactionsKey =
       GlobalKey<RecentTransactionsState>();
   final GlobalKey<OverallExpensesState> overallExpenseKey =
@@ -33,7 +35,6 @@ class _ExpenseTrackerState extends State<ExpenseTracker>
   DateTime selectedDate = DateTime.now();
   String selectedAccount = '';
   List<Map<String, dynamic>> newTransactions = [];
-
   final dbHelper = DBHelper();
 
   @override
@@ -99,6 +100,15 @@ class _ExpenseTrackerState extends State<ExpenseTracker>
     }
   }
 
+  double _calculateRecentTotalExpense() {
+  final recentTransactions =
+      newTransactions.length > 5 ? newTransactions.sublist(0, 5) : newTransactions;
+
+  return recentTransactions
+      .where((tx) => tx['isExpense'] == 1) // Only expenses
+      .fold(0.0, (sum, tx) => sum + double.parse(tx['amount'].toString()));
+}
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -119,7 +129,8 @@ class _ExpenseTrackerState extends State<ExpenseTracker>
           centerTitle: true,
           title: Text(
             "Vault",
-            style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w500),
+            style: TextStyle(
+                color: Colors.black, fontSize: 20, fontWeight: FontWeight.w500),
           ),
         ),
         body: Container(
@@ -129,23 +140,66 @@ class _ExpenseTrackerState extends State<ExpenseTracker>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ExpensesBarChart(
-                    key: expensesBarChartKey,
-                    onTransactionUpdated: refreshTransactions),
-                // OverallExpenses(
-                //   key: overallExpenseKey,
-                //   onTransactionUpdated:
-                //       refreshTransactions, // Pass the update callback
-                // ),
+                // Swappable Stack Cards
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height *
+                          0.40, // Adjust height as needed
+                      child: PageView(
+                        controller: _pageController,
+                        children: [
+                          OverallExpenses(
+                            key: overallExpenseKey,
+                            onTransactionUpdated: refreshTransactions,
+                          ),
+                          ExpensesBarChart(
+                            key: expensesBarChartKey,
+                            onTransactionUpdated: refreshTransactions,
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Page Indicator (Dots)
+                    Positioned(
+                      bottom: 20,
+                      child: SmoothPageIndicator(
+                        controller: _pageController,
+                        count: 2, // Two pages
+                        effect: ExpandingDotsEffect(
+                          dotHeight: 8,
+                          dotWidth: 8,
+                          activeDotColor: Color.fromARGB(255, 221, 153, 211),
+                          dotColor: Colors.grey.shade300,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(height: screenWidth * 0.04),
                 Padding(
-                  padding: const EdgeInsets.only(left: 12.5),
-                  child: Text(
-                    'Recent Expenses',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0),
+                  padding: const EdgeInsets.only(left: 10.5, right: 11.5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Recent Expenses',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0),
+                      ),
+                      // Total Expenses Amount
+                      Text(
+                        '₹${_calculateRecentTotalExpense()}',
+                        style: TextStyle(
+                          color: Colors.red, // You can change this color
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(height: screenWidth * 0.02),

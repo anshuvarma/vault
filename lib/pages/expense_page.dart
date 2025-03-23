@@ -64,6 +64,9 @@ class _ExpensePageState extends State<ExpensePage> {
 
   Future<void> _deleteTransaction(int id) async {
     await dbHelper.deleteTransaction(id);
+    setState(() {
+      transactionsUpdated = true; // Mark transactions as updated
+    });
     refreshTransactions();
     deleteDialog(context);
   }
@@ -88,6 +91,12 @@ class _ExpensePageState extends State<ExpensePage> {
   void dispose() {
     // Navigator.pop(context, transactionsUpdated); // Ensure update is passed
     super.dispose();
+  }
+
+  double _calculateTotalExpense() {
+    return newTransactions
+        .where((tx) => tx['isExpense'] == 1) // Only expenses
+        .fold(0.0, (sum, tx) => sum + double.parse(tx['amount'].toString()));
   }
 
   @override
@@ -116,7 +125,10 @@ class _ExpensePageState extends State<ExpensePage> {
             ),
             title: Text(
               'Vault',
-              style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500),
             ),
             centerTitle: true,
           ),
@@ -181,7 +193,7 @@ class _ExpensePageState extends State<ExpensePage> {
                                 selectedCategory = selected ? category : null;
                               });
                             },
-                          selectedColor: Colors.purple,
+                            selectedColor: Colors.purple,
                             showCheckmark: false,
                           ),
                         );
@@ -190,16 +202,33 @@ class _ExpensePageState extends State<ExpensePage> {
                   ),
                 ),
                 SizedBox(height: 15),
-                Text(
-                  'All Transactions',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.5, right: 11.5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'All Expenses',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
+                      SizedBox(height: 10),
+                      // Total Expenses Amount
+                      Text(
+                        '₹${_calculateTotalExpense()}',
+                        style: TextStyle(
+                          color: Colors.red, // You can change this color
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                SizedBox(height: 10),
-
                 // Transaction List
+                SizedBox(height: 15),
                 Expanded(
                   child: newTransactions.isNotEmpty
                       ? AllTransactionList(
@@ -210,81 +239,6 @@ class _ExpensePageState extends State<ExpensePage> {
                           child: Text('No transactions yet!'),
                         ),
                 ),
-
-                // Expanded(
-                //   child: newTransactions.isNotEmpty
-                //       ? ListView.builder(
-                //           itemCount: filteredTransactions.length,
-                //           itemBuilder: (context, index) {
-                //             final transaction = filteredTransactions[index];
-                //             final category = transaction['category'];
-                //             final color = categoryColors[category] ?? Colors.cyan;
-
-                //             return Dismissible(
-                //               key: ValueKey(transaction['id']),
-                //               direction: DismissDirection.endToStart,
-                //               background: Container(
-                //                 alignment: Alignment.centerRight,
-                //                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                //                 color: Colors.red,
-                //                 child:
-                //                     const Icon(Icons.delete, color: Colors.white),
-                //               ),
-                //               confirmDismiss: (direction) => showDialog(
-                //                 context: context,
-                //                 builder: (context) => AlertDialog(
-                //                   title: Text("Delete Transaction"),
-                //                   content: Text(
-                //                       "Are you sure you want to delete this transaction?"),
-                //                   actions: [
-                //                     TextButton(
-                //                       onPressed: () =>
-                //                           Navigator.of(context).pop(false),
-                //                       child: Text("Cancel"),
-                //                     ),
-                //                     TextButton(
-                //                       onPressed: () =>
-                //                           Navigator.of(context).pop(true),
-                //                       child: Text("Delete"),
-                //                     ),
-                //                   ],
-                //                 ),
-                //               ),
-                //               onDismissed: (direction) {
-                //                 _deleteTransaction(transaction['id']);
-                //               },
-                //               child: Card(
-                //                 color: color.withValues(),
-                //                 child: ListTile(
-                //                   iconColor: Colors.white,
-                //                   leading: Icon(
-                //                     Icons.account_balance_wallet,
-                //                   ),
-                //                   title: Text(transaction['category'],
-                //                       style:
-                //                           TextStyle(fontWeight: FontWeight.bold)),
-                //                   subtitle: Column(
-                //                     crossAxisAlignment: CrossAxisAlignment.start,
-                //                     children: [
-                //                       Text(transaction['date']),
-                //                     ],
-                //                   ),
-                //                   trailing: Text(
-                //                     transaction['amount'].toString(),
-                //                     style: TextStyle(
-                //                         fontSize: 15,
-                //                         fontWeight: FontWeight.bold,
-                //                         color: Colors.white),
-                //                   ),
-                //                 ),
-                //               ),
-                //             );
-                //           },
-                //         )
-                //       : Center(
-                //           child: Text('No transactions yet!'),
-                //         ),
-                // ),
               ],
             ),
           ),

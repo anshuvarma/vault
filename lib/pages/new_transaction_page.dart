@@ -177,7 +177,7 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
           },
         ),
         title: Text(
-          'New Transaction',
+          'Vault',
           style: TextStyle(color: Colors.black, fontSize: 20),
         ),
         centerTitle: true,
@@ -190,76 +190,90 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Toggle between Expense and Income
-                  Row(
-                    children: [
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isExpense = true;
-                            });
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 16),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: isExpense
-                                  ? Color.fromARGB(255, 215, 82, 82)
-                                  : Colors.grey[200],
-                            ),
-                            child: Column(
-                              children: [
-                                Icon(Icons.remove_circle_outline,
-                                    color: isExpense
-                                        ? Colors.white
-                                        : Colors.black),
-                                SizedBox(height: 8),
-                                Text('Expense',
-                                    style: TextStyle(
-                                        color: isExpense
-                                            ? Colors.white
-                                            : Colors.black)),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 16),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isExpense = false;
-                            });
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 16),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: isExpense
-                                  ? Colors.grey[200]
-                                  : Color.fromARGB(255, 127, 213, 130),
-                            ),
-                            child: Column(
-                              children: [
-                                Icon(Icons.add_circle_outline,
-                                    color: isExpense
-                                        ? Colors.black
-                                        : Colors.white),
-                                SizedBox(height: 8),
-                                Text('Income',
-                                    style: TextStyle(
-                                        color: isExpense
-                                            ? Colors.black
-                                            : Colors.white)),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                  SizedBox(height: 15.0,),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Add Expense",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20.0),
+                    ),
                   ),
+                  // Toggle between Expense and Income
+                  // Row(
+                  //   children: [
+                  //     Expanded(
+                  //       child: GestureDetector(
+                  //         onTap: () {
+                  //           setState(() {
+                  //             isExpense = true;
+                  //           });
+                  //         },
+                  //         child: Container(
+                  //           padding: EdgeInsets.symmetric(vertical: 16),
+                  //           decoration: BoxDecoration(
+                  //             borderRadius: BorderRadius.circular(12),
+                  //             color: isExpense
+                  //                 ? Color.fromARGB(255, 200, 98, 98)
+                  //                 : Colors.grey[200],
+                  //           ),
+                  //           child: Column(
+                  //             children: [
+                  //               Text(
+                  //                 'Add your Expense',
+                  //                 style: TextStyle(
+                  //                     color: isExpense
+                  //                         ? Colors.white
+                  //                         : Colors.black),
+                  //               ),
+                  //               SizedBox(height: 12),
+                  //               Icon(Icons.remove_circle_outline,
+                  //                   color: isExpense
+                  //                       ? Colors.white
+                  //                       : Colors.black),
+                  //               SizedBox(height: 10),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     SizedBox(width: 16),
+                  //     // Expanded(
+                  //     //   child: GestureDetector(
+                  //     //     onTap: () {
+                  //     //       setState(() {
+                  //     //         isExpense = false;
+                  //     //       });
+                  //     //     },
+                  //     //     child: Container(
+                  //     //       padding: EdgeInsets.symmetric(vertical: 16),
+                  //     //       decoration: BoxDecoration(
+                  //     //         borderRadius: BorderRadius.circular(12),
+                  //     //         color: isExpense
+                  //     //             ? Colors.grey[200]
+                  //     //             : Color.fromARGB(255, 127, 213, 130),
+                  //     //       ),
+                  //     //       child: Column(
+                  //     //         children: [
+                  //     //           Icon(Icons.add_circle_outline,
+                  //     //               color: isExpense
+                  //     //                   ? Colors.black
+                  //     //                   : Colors.white),
+                  //     //           SizedBox(height: 8),
+                  //     //           Text('Income',
+                  //     //               style: TextStyle(
+                  //     //                   color: isExpense
+                  //     //                       ? Colors.black
+                  //     //                       : Colors.white)),
+                  //     //         ],
+                  //     //       ),
+                  //     //     ),
+                  //     //   ),
+                  //     // ),
+                  //   ],
+                  // ),
                   SizedBox(height: 24),
 
                   // Amount Input Field

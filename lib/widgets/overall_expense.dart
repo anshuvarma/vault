@@ -101,11 +101,12 @@ class OverallExpensesState extends State<OverallExpenses> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'Overall Expenses',
+                  'The Cost of Living: Food, Shopping, & More',
                   style: TextStyle(
-                      fontSize: screenWidth * 0.05,
+                      fontSize: screenWidth * 0.04,
                       fontWeight: FontWeight.bold),
                 ),
+                // SizedBox(height: 0.3,),
                 Expanded(
                   child: dataMap.isNotEmpty
                       ? PieChart(
@@ -117,7 +118,7 @@ class OverallExpensesState extends State<OverallExpenses> {
                           legendOptions: LegendOptions(
                             legendShape: BoxShape.circle,
                             showLegendsInRow: false,
-                            legendPosition: LegendPosition.right,
+                            legendPosition: LegendPosition.left,
                             legendTextStyle: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -125,7 +126,7 @@ class OverallExpensesState extends State<OverallExpenses> {
                           ),
                           chartValuesOptions: ChartValuesOptions(
                             chartValueStyle: TextStyle(
-                                fontSize: 13.0,
+                                fontSize: 12.0,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w700),
                             showChartValuesInPercentage: true,
