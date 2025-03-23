@@ -76,7 +76,7 @@ class _ExpenseTrackerState extends State<ExpenseTracker>
   void onItemTapped(int index) async {
     if (index == 1) {
       // Navigate to ExpensePage and await result
-      final result = await Navigator.push(
+      final result = await Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => ExpensePage()),
       );
@@ -124,6 +124,7 @@ class _ExpenseTrackerState extends State<ExpenseTracker>
       },
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Color.fromARGB(255, 250, 189, 241),
           elevation: 2,
           centerTitle: true,

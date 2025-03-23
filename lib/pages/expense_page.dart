@@ -114,15 +114,9 @@ class _ExpensePageState extends State<ExpensePage> {
         },
         child: Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: Color.fromARGB(255, 250, 189, 241),
             elevation: 1,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () {
-                // Handle back button press
-                Navigator.pop(context, transactionsUpdated);
-              },
-            ),
             title: Text(
               'Vault',
               style: TextStyle(
