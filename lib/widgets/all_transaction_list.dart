@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import '../constants.dart';
 
 class AllTransactionList extends StatelessWidget {
   final List<Map<String, dynamic>> filteredTransactions;
@@ -22,6 +23,7 @@ class AllTransactionList extends StatelessWidget {
         final transaction = filteredTransactions[index];
         final category = transaction['category'];
         final color = categoryColors[category] ?? Colors.cyan;
+        final iconPath = categoryIcons[category.toString().toLowerCase()];
 
         return Dismissible(
           key: ValueKey(transaction['id']),
@@ -57,9 +59,14 @@ class AllTransactionList extends StatelessWidget {
             color: color,
             child: ListTile(
               iconColor: Colors.white,
-              leading: Icon(
-                Icons.account_balance_wallet,
-              ),
+              leading: iconPath != null
+                  ? Image.asset(
+                      iconPath,
+                      width: 28,
+                      height: 28,
+                      fit: BoxFit.contain,
+                    )
+                  : Icon(Icons.category, color: Colors.white),
               title: Text(transaction['category'],
                   style: TextStyle(
                     fontWeight: FontWeight.bold,

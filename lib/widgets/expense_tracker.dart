@@ -101,13 +101,14 @@ class _ExpenseTrackerState extends State<ExpenseTracker>
   }
 
   double _calculateRecentTotalExpense() {
-  final recentTransactions =
-      newTransactions.length > 5 ? newTransactions.sublist(0, 5) : newTransactions;
+    final recentTransactions = newTransactions.length > 5
+        ? newTransactions.sublist(0, 5)
+        : newTransactions;
 
-  return recentTransactions
-      .where((tx) => tx['isExpense'] == 1) // Only expenses
-      .fold(0.0, (sum, tx) => sum + double.parse(tx['amount'].toString()));
-}
+    return recentTransactions
+        .where((tx) => tx['isExpense'] == 1) // Only expenses
+        .fold(0.0, (sum, tx) => sum + double.parse(tx['amount'].toString()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,13 +126,13 @@ class _ExpenseTrackerState extends State<ExpenseTracker>
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Color.fromARGB(255, 250, 189, 241),
+          backgroundColor: Color.fromARGB(255, 173, 141, 189),
           elevation: 2,
           centerTitle: true,
           title: Text(
             "Vault",
             style: TextStyle(
-                color: Colors.black, fontSize: 20, fontWeight: FontWeight.w500),
+                color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),
           ),
         ),
         body: Container(
@@ -217,8 +218,8 @@ class _ExpenseTrackerState extends State<ExpenseTracker>
         bottomNavigationBar: BottomNavBar(
             currentIndex: currentIndex, onItemTapped: onItemTapped),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Color.fromARGB(255, 250, 189, 241),
-          foregroundColor: Colors.black,
+          backgroundColor: Color.fromARGB(255, 173, 141, 189),
+          foregroundColor: Colors.white,
           onPressed: () async {
             final result = await Navigator.push(
               context,

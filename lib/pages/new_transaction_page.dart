@@ -81,14 +81,15 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
   }
 
   // Custom Dropdown Menu with Colorful Options
-  Widget buildCustomDropdown({
-    required List<String> items,
-    required String value,
-    required ValueChanged<String?> onChanged,
-    required Map<String, Color> colorMap,
-    required String label,
-    required IconData icon,
-  }) {
+  Widget buildCustomDropdown(
+      {required List<String> items,
+      required String value,
+      required ValueChanged<String?> onChanged,
+      required Map<String, Color> colorMap,
+      required String label,
+      required String iconPath
+      // required IconData icon,
+      }) {
     return GestureDetector(
       onTap: () {
         showDialog(
@@ -147,7 +148,11 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-              child: Icon(icon),
+              child: Image.asset(
+                iconPath, // 👈 use asset image
+                width: 24,
+                height: 24,
+              ),
             ),
             SizedBox(width: 8),
             Expanded(
@@ -168,17 +173,17 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 250, 189, 241),
+        backgroundColor: Color.fromARGB(255, 173, 141, 189),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.pop(context, true);
           },
         ),
         title: Text(
           'Vault',
-          style: TextStyle(color: Colors.black, fontSize: 20),
+          style: TextStyle(color: Colors.white, fontSize: 20),
         ),
         centerTitle: true,
       ),
@@ -190,7 +195,9 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 15.0,),
+                  SizedBox(
+                    height: 15.0,
+                  ),
                   Align(
                     alignment: Alignment.center,
                     child: Text(
@@ -201,79 +208,6 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
                           fontSize: 20.0),
                     ),
                   ),
-                  // Toggle between Expense and Income
-                  // Row(
-                  //   children: [
-                  //     Expanded(
-                  //       child: GestureDetector(
-                  //         onTap: () {
-                  //           setState(() {
-                  //             isExpense = true;
-                  //           });
-                  //         },
-                  //         child: Container(
-                  //           padding: EdgeInsets.symmetric(vertical: 16),
-                  //           decoration: BoxDecoration(
-                  //             borderRadius: BorderRadius.circular(12),
-                  //             color: isExpense
-                  //                 ? Color.fromARGB(255, 200, 98, 98)
-                  //                 : Colors.grey[200],
-                  //           ),
-                  //           child: Column(
-                  //             children: [
-                  //               Text(
-                  //                 'Add your Expense',
-                  //                 style: TextStyle(
-                  //                     color: isExpense
-                  //                         ? Colors.white
-                  //                         : Colors.black),
-                  //               ),
-                  //               SizedBox(height: 12),
-                  //               Icon(Icons.remove_circle_outline,
-                  //                   color: isExpense
-                  //                       ? Colors.white
-                  //                       : Colors.black),
-                  //               SizedBox(height: 10),
-                  //             ],
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     SizedBox(width: 16),
-                  //     // Expanded(
-                  //     //   child: GestureDetector(
-                  //     //     onTap: () {
-                  //     //       setState(() {
-                  //     //         isExpense = false;
-                  //     //       });
-                  //     //     },
-                  //     //     child: Container(
-                  //     //       padding: EdgeInsets.symmetric(vertical: 16),
-                  //     //       decoration: BoxDecoration(
-                  //     //         borderRadius: BorderRadius.circular(12),
-                  //     //         color: isExpense
-                  //     //             ? Colors.grey[200]
-                  //     //             : Color.fromARGB(255, 127, 213, 130),
-                  //     //       ),
-                  //     //       child: Column(
-                  //     //         children: [
-                  //     //           Icon(Icons.add_circle_outline,
-                  //     //               color: isExpense
-                  //     //                   ? Colors.black
-                  //     //                   : Colors.white),
-                  //     //           SizedBox(height: 8),
-                  //     //           Text('Income',
-                  //     //               style: TextStyle(
-                  //     //                   color: isExpense
-                  //     //                       ? Colors.black
-                  //     //                       : Colors.white)),
-                  //     //         ],
-                  //     //       ),
-                  //     //     ),
-                  //     //   ),
-                  //     // ),
-                  //   ],
-                  // ),
                   SizedBox(height: 24),
 
                   // Amount Input Field
@@ -306,9 +240,9 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
                         }
                       });
                     },
-                    colorMap: isExpense ? categoryColors : sourceColors,
-                    label: isExpense ? 'Category' : 'Source',
-                    icon: isExpense ? Icons.category : Icons.attach_money,
+                    colorMap: categoryColors,
+                    label: 'Category',
+                    iconPath: 'lib/assets/icons/category.png',
                   ),
                   SizedBox(height: 16),
 
@@ -320,7 +254,14 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
                     child: InputDecorator(
                       decoration: InputDecoration(
                         labelText: 'Date',
-                        prefixIcon: Icon(Icons.calendar_today),
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset(
+                            'lib/assets/icons/calendar.png',
+                            width: 14,
+                            height: 14,
+                          ),
+                        ),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12)),
                       ),
@@ -344,7 +285,7 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
                       },
                       colorMap: accountColors,
                       label: 'Account',
-                      icon: Icons.account_balance_wallet,
+                      iconPath: 'lib/assets/icons/coin.png',
                     ),
 
                   SizedBox(height: 24),
@@ -362,12 +303,13 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
                   onPressed: isFormValid ? _saveTransaction : null,
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(vertical: 16),
-                    backgroundColor: Color.fromARGB(255, 250, 189, 241),
+                    backgroundColor: Color.fromARGB(255, 173, 141, 189),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: Text('Save', style: TextStyle(fontSize: 18)),
+                  child: Text('Save',
+                      style: TextStyle(fontSize: 18, color: Colors.white)),
                 ),
               ),
             ),

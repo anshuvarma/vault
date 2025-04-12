@@ -28,11 +28,11 @@ final List<String> incomeSources = [
 final List<String> accounts = ['Cash', 'Card', 'UPI'];
 
 final Map<String, Color> categoryColors = {
-  'Food': Color.fromARGB(255, 134, 175, 213),
-  'Shopping': Color.fromARGB(255, 243, 144, 109),
-  'Transport': Color.fromARGB(255, 152, 190, 115),
-  'Health': Color.fromARGB(255, 190, 106, 146),
-  'Entertainment': Color.fromARGB(255, 160, 122, 189),
+  'Food': Color.fromARGB(255, 141, 174, 205),
+  'Shopping': Color.fromARGB(255, 174, 163, 231),
+  'Transport': Color.fromARGB(255, 206, 150, 198),
+  'Health': Color.fromARGB(255, 172, 204, 140),
+  'Entertainment': Color.fromARGB(255, 206, 137, 137),
   'Others': Colors.grey,
 };
 
@@ -54,6 +54,21 @@ final Map<String, Color> accountColors = {
   'Cash': const Color.fromARGB(255, 229, 123, 158),
   'Card': const Color.fromARGB(255, 142, 152, 208),
   'UPI': const Color.fromARGB(255, 119, 188, 198),
+};
+
+final Map<String, String> categoryIcons = {
+  'food': 'lib/assets/icons/food.png',
+  'shopping': 'lib/assets/icons/shopping.png',
+  'transport': 'lib/assets/icons/transport.png',
+  'health': 'lib/assets/icons/health.png',
+  'entertainment': 'lib/assets/icons/entertainment.png',
+  'others': 'lib/assets/icons/others.png',
+};
+
+final Map<String, String> accountIcons = {
+  'cash': 'lib/assets/icons/account/cash.png',
+  'card': 'lib/assets/icons/account/card.png',
+  'upi': 'lib/assets/icons/account/upi.png',
 };
 
 void deleteDialog(BuildContext context) {

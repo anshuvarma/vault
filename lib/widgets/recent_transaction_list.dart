@@ -25,6 +25,7 @@ class RecentTransactionList extends StatelessWidget {
               final transaction = recentTransactions[index];
               final category = transaction['category'];
               final color = categoryColors[category] ?? Colors.cyan;
+              final iconPath = categoryIcons[category.toString().toLowerCase()];
 
               return Dismissible(
                 key: ValueKey(transaction['id']),
@@ -60,7 +61,14 @@ class RecentTransactionList extends StatelessWidget {
                   color: color,
                   child: ListTile(
                     iconColor: Colors.white,
-                    leading: Icon(Icons.account_balance_wallet),
+                    leading: iconPath != null
+                        ? Image.asset(
+                            iconPath,
+                            width: 28,
+                            height: 28,
+                            fit: BoxFit.contain,
+                          )
+                        : Icon(Icons.category, color: Colors.white),
                     title: Text(
                       transaction['category'],
                       style: TextStyle(
@@ -71,14 +79,18 @@ class RecentTransactionList extends StatelessWidget {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 2,),
+                        SizedBox(
+                          height: 2,
+                        ),
                         Text(
                           transaction['date'],
                           style: TextStyle(
                             color: Colors.white,
                           ),
                         ),
-                        SizedBox(height: 2,),
+                        SizedBox(
+                          height: 2,
+                        ),
                         Text(
                           'Paid through ${transaction['account']}',
                           style: TextStyle(

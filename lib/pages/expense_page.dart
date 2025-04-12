@@ -115,12 +115,12 @@ class _ExpensePageState extends State<ExpensePage> {
         child: Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            backgroundColor: Color.fromARGB(255, 250, 189, 241),
+            backgroundColor: Color.fromARGB(255, 173, 141, 189),
             elevation: 1,
             title: Text(
               'Vault',
               style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.w500),
             ),
@@ -149,7 +149,12 @@ class _ExpensePageState extends State<ExpensePage> {
                       border: InputBorder.none,
                       hintText: 'Search for any expense',
                       hintStyle: TextStyle(color: Colors.blueGrey.shade200),
-                      icon: Icon(Icons.search, color: Colors.blueGrey.shade200),
+                      icon: Image.asset(
+                        'lib/assets/icons/search.png',
+                        width: 24,
+                        height: 24,
+                        // color: Colors.blueGrey.shade200,
+                      ),
                     ),
                   ),
                 ),
@@ -239,8 +244,8 @@ class _ExpensePageState extends State<ExpensePage> {
           bottomNavigationBar: BottomNavBar(
               currentIndex: currentIndex, onItemTapped: onItemTapped),
           floatingActionButton: FloatingActionButton(
-            backgroundColor: Color.fromARGB(255, 250, 189, 241),
-            foregroundColor: Colors.black,
+            backgroundColor: Color.fromARGB(255, 173, 141, 189),
+            foregroundColor: Colors.white,
             onPressed: () async {
               final result = await Navigator.push(
                 context,

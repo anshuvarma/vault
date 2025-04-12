@@ -78,7 +78,7 @@ class _TempState extends State<Temp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 250, 189, 241),
+        backgroundColor: Color.fromARGB(255, 173, 141, 189),
         elevation: 1,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),

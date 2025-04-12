@@ -24,10 +24,23 @@ class _BottomNavBarState extends State<BottomNavBar> {
       // selectedItemColor: Colors.lightBlueAccent,
       // unselectedItemColor: Colors.grey,
       onTap: widget.onItemTapped,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home_rounded), label: 'Home'),
+      items: [
         BottomNavigationBarItem(
-            icon: Icon(Icons.money_rounded), label: 'Expense'),
+          icon: Image.asset(
+            'lib/assets/icons/home.png',
+            width: 24,
+            height: 24,
+          ),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Image.asset(
+            'lib/assets/icons/expenses.png',
+            width: 24,
+            height: 24,
+          ),
+          label: 'Expense',
+        ),
       ],
     );
   }
