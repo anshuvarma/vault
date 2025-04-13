@@ -54,8 +54,6 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
     final categoryOrSource = isExpense ? selectedCategory : selectedSource;
 
     final dbHelper = DBHelper();
-    print(
-        "Saving transaction: {name: $type, category: $categoryOrSource, amount: $amount, date: $date, isExpense: ${isExpense ? 1 : 0}}");
     await dbHelper.insertTransaction({
       'name': type,
       'category': categoryOrSource,
@@ -74,7 +72,6 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
     });
 
     // Pass a result back to the previous page
-    print("Transaction saved, calling onUpdate callback...");
     // Close the current page and return to the previous one
     widget.onUpdate();
     Navigator.pop(context, true);

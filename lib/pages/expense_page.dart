@@ -113,6 +113,7 @@ class _ExpensePageState extends State<ExpensePage> {
           }
         },
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             automaticallyImplyLeading: false,
             backgroundColor: Color.fromARGB(255, 173, 141, 189),

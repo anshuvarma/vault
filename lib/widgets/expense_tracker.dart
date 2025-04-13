@@ -44,15 +44,12 @@ class _ExpenseTrackerState extends State<ExpenseTracker>
   }
 
   Future<void> _loadTransactions() async {
-    print("Loading transactions...");
     final data = await dbHelper.fetchTransactions();
     if (!mounted) {
-      print("Widget is not mounted, skipping setState.");
       return;
     }
     setState(() {
       newTransactions = data.reversed.toList();
-      print("Transactions updated.");
     });
   }
 
@@ -64,7 +61,6 @@ class _ExpenseTrackerState extends State<ExpenseTracker>
     _loadTransactions();
     expensesBarChartKey.currentState?.fetchTransactions();
     _loadTransactions();
-    print("Transactions refreshed.");
   }
 
   Future<void> _deleteTransaction(int id) async {

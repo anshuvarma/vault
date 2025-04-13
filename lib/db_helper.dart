@@ -55,9 +55,6 @@ class DBHelper {
   Future<int> insertTransaction(Map<String, dynamic> transaction) async {
     final db = await database;
 
-    // Debugging: Check if `account` is null before inserting
-    print("Before insert - Account: ${transaction['account']}");
-
     // Ensure the name field is never null
     transaction['name'] = transaction['name'] ?? 'Unknown';
 
@@ -65,12 +62,8 @@ class DBHelper {
     transaction['account'] = transaction['account']?.toString().trim();
 
     if (transaction['account'] == null || transaction['account'].toString().trim().isEmpty) {
-    print("⚠️ Warning: 'account' is null or empty!");
   }
-
-    print("Inserting transaction: $transaction");
     final result = await db.insert('transactions', transaction);
-    print("Transaction inserted with ID: $result");
 
     return result;
   }
@@ -88,7 +81,6 @@ class DBHelper {
            isExpense 
     FROM transactions
     ''');
-    print("Fetched transactions: $result"); // Debugging log
     return result;
   }
 
