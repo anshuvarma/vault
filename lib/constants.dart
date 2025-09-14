@@ -84,7 +84,7 @@ void deleteDialog(BuildContext context) {
             const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         content: SizedBox(
           width: 300, // Adjust width
-          height: 130, // Adjust height
+          height: 150, // Adjust height
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -92,7 +92,7 @@ void deleteDialog(BuildContext context) {
                 height: 25,
               ),
               Text(
-                "Your transaction has been deleted succesfully",
+                "Transaction Deleted Successfully!!!",
                 style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w500,

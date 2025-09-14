@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unused_local_variable, avoid_print, unused_field, unused_element, use_build_context_synchronously, use_function_type_syntax_for_parameters, non_constant_identifier_names
+// ignore_for_file: prefer_const_constructors, unused_local_variable, avoid_print, unused_field, unused_element, use_build_context_synchronously, use_function_type_syntax_for_parameters, non_constant_identifier_names, deprecated_member_use, equal_keys_in_map, unused_import
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:vault/widgets/bottom_nav_bar.dart';
